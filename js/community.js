@@ -1,11 +1,19 @@
 /* ====== COMMUNITY JS ====== */
-let currentUser = DB.requireAuth();
-if (!currentUser) throw new Error('Not authenticated');
-
+let currentUser = null;
 let activeCommunity = 'All';
 let activeSort = 'new';
 let currentPostId = null;
 let uploadedFiles = [];
+
+async function initCommunity() {
+  currentUser = await DB.requireAuth();
+  if (!currentUser) return;
+
+  setupNav();
+  await renderFeed();
+  setupCommunityNav();
+  setupSortTabs();
+}
 
 // Setup nav UI
 function setupNav() {
@@ -13,10 +21,29 @@ function setupNav() {
   const cr = document.getElementById('create-avatar');
   const ca = document.getElementById('comment-avatar');
   const initials = avatarInitials(currentUser.display_name || currentUser.displayName);
-  [av, cr, ca].forEach(el => { if(el){ el.textContent = initials; el.style.background = avatarColor(currentUser.username); } });
+  
+  const currentAv = currentUser.avatar_url || currentUser.avatar;
+  
+  [av, cr, ca].forEach(el => { 
+    if(el){ 
+      if (currentAv) {
+        el.innerHTML = `<img src="${currentAv}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+        el.style.background = 'none';
+      } else {
+        el.textContent = initials; 
+        el.style.background = avatarColor(currentUser.username); 
+      }
+    } 
+  });
+  
   const info = document.getElementById('dropdown-user-info');
   if(info) info.innerHTML = `<div class="uname">@${currentUser.username}</div><div class="email">${currentUser.display_name || currentUser.displayName}</div>`;
-  document.getElementById('logout-btn').addEventListener('click', async () => { await supabase.auth.signOut(); DB.del('current_user'); window.location.href = '../index.html'; });
+  
+  document.getElementById('logout-btn').addEventListener('click', async () => { 
+    await supabase.auth.signOut(); 
+    DB.del('current_user'); 
+    window.location.href = '../index.html'; 
+  });
   
   // Theme Toggle
   const themeToggle = document.getElementById('theme-toggle');
@@ -24,14 +51,20 @@ function setupNav() {
     const sun = document.getElementById('theme-icon-sun');
     const moon = document.getElementById('theme-icon-moon');
     const currentTheme = localStorage.getItem('theme') || 'light';
-    if(currentTheme === 'dark'){ document.body.classList.add('dark-theme'); sun.style.display='block'; moon.style.display='none'; }
+    if(currentTheme === 'dark'){ document.body.classList.add('dark-theme'); if(sun)sun.style.display='block'; if(moon)moon.style.display='none'; }
     themeToggle.addEventListener('click', () => {
       const isDark = document.body.classList.toggle('dark-theme');
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      sun.style.display = isDark ? 'block' : 'none';
-      moon.style.display = isDark ? 'none' : 'block';
+      if(sun) sun.style.display = isDark ? 'block' : 'none';
+      if(moon) moon.style.display = isDark ? 'none' : 'block';
     });
   }
+
+  const navAv = document.getElementById('nav-avatar');
+  if(navAv) navAv.addEventListener('click', () => {
+    const menu = document.getElementById('nav-user-menu');
+    if(menu) menu.classList.toggle('open');
+  });
 }
 
 // Render posts
@@ -56,7 +89,8 @@ async function renderFeed() {
     const net = (post.upvotes || 0) - (post.downvotes || 0);
     const exp = timeLeft(post.expires_at);
     const soon = new Date(post.expires_at) - Date.now() < 3600000;
-    const userVote = (DB.get('votes_' + currentUser.id) || {})[post.id];
+    const votesKey = 'votes_' + currentUser.id;
+    const userVote = (DB.get(votesKey) || {})[post.id];
     
     feed.insertAdjacentHTML('beforeend', `
       <div class="post-card" id="pcard_${post.id}" onclick="openPost('${post.id}')">
@@ -96,7 +130,6 @@ async function renderFeed() {
 function escHtml(str){ return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 async function vote(postId, dir, btn) {
-  // Logic remains similar but updates Supabase
   const votesKey = 'votes_' + currentUser.id;
   const votes = DB.get(votesKey) || {};
   const prev = votes[postId];
@@ -106,22 +139,40 @@ async function vote(postId, dir, btn) {
   
   DB.set(votesKey, votes);
   
-  // Real update in Supabase (simplified increment for demo)
   const field = dir === 'up' ? 'upvotes' : 'downvotes';
   await supabase.rpc('increment_vote', { post_id: postId, field_name: field });
   
-  renderFeed();
+  await renderFeed();
 }
 
-// Create post modal
+// Modal logic
 function openCreatePost(type) {
-  document.getElementById('create-modal').style.display = 'flex';
-  if(type === 'image') document.getElementById('file-input').click();
+  const modal = document.getElementById('create-modal');
+  if(modal) modal.style.display = 'flex';
+  if(type === 'image') {
+    const input = document.getElementById('file-input');
+    if(input) input.click();
+  }
 }
-function closeCreatePost() { document.getElementById('create-modal').style.display = 'none'; uploadedFiles = []; document.getElementById('file-previews').innerHTML = ''; document.getElementById('post-title').value = ''; document.getElementById('post-body').value = ''; document.getElementById('post-tags').value = ''; }
+function closeCreatePost() { 
+  const modal = document.getElementById('create-modal');
+  if(modal) modal.style.display = 'none'; 
+  uploadedFiles = []; 
+  const previews = document.getElementById('file-previews');
+  if(previews) previews.innerHTML = ''; 
+  const t = document.getElementById('post-title'); if(t) t.value = '';
+  const b = document.getElementById('post-body'); if(b) b.value = '';
+  const tags = document.getElementById('post-tags'); if(tags) tags.value = '';
+}
 
-document.getElementById('create-trigger').addEventListener('click', () => openCreatePost('text'));
-document.getElementById('post-title').addEventListener('input', function(){ document.getElementById('title-count').textContent = this.value.length + '/300'; });
+const trigger = document.getElementById('create-trigger');
+if(trigger) trigger.addEventListener('click', () => openCreatePost('text'));
+
+const titleInput = document.getElementById('post-title');
+if(titleInput) titleInput.addEventListener('input', function(){ 
+  const count = document.getElementById('title-count');
+  if(count) count.textContent = this.value.length + '/300'; 
+});
 
 async function handleFileUpload(evt) {
   const previews = document.getElementById('file-previews');
@@ -137,7 +188,7 @@ async function handleFileUpload(evt) {
     
     const { data: { publicUrl } } = supabase.storage.from('posts').getPublicUrl(path);
     uploadedFiles.push({ name: file.name, url: publicUrl, type: file.type });
-    previews.insertAdjacentHTML('beforeend',`<div class="file-preview-item">📎 ${escHtml(file.name)}</div>`);
+    if(previews) previews.insertAdjacentHTML('beforeend',`<div class="file-preview-item">📎 ${escHtml(file.name)}</div>`);
   }
 }
 
@@ -150,8 +201,10 @@ async function submitPost() {
   if(!title){ showToast('Title is required'); return; }
   
   const btn = document.getElementById('submit-post-btn');
-  btn.disabled = true;
-  btn.textContent = 'Posting...';
+  if(btn){
+    btn.disabled = true;
+    btn.textContent = 'Posting...';
+  }
 
   const post = {
     author_id: currentUser.id,
@@ -165,17 +218,26 @@ async function submitPost() {
 
   const { data, error } = await DB.createPost(post);
   
-  if(error) { showToast('Error: ' + error.message); btn.disabled = false; btn.textContent = 'Post to Community'; return; }
+  if(error) { 
+    showToast('Error: ' + error.message); 
+    if(btn){
+      btn.disabled = false;
+      btn.textContent = 'Post to Community'; 
+    }
+    return; 
+  }
 
   closeCreatePost();
-  renderFeed();
+  await renderFeed();
   showToast('Post shared! 🚀');
-  btn.disabled = false;
-  btn.textContent = 'Post to Community';
+  if(btn){
+    btn.disabled = false;
+    btn.textContent = 'Post to Community';
+  }
 }
 
 function sharePost(postId) {
-  const url = window.location.origin + '/pages/post.html?id=' + postId;
+  const url = window.location.origin + window.location.pathname.replace('community.html', 'post.html') + '?id=' + postId;
   if(navigator.clipboard) navigator.clipboard.writeText(url).then(()=>showToast('Link copied!'));
   else showToast('URL: ' + url);
 }
@@ -188,30 +250,33 @@ function showToast(msg) {
   setTimeout(() => t.remove(), 2500);
 }
 
-// Community nav
-document.querySelectorAll('.comm-item').forEach(item => {
-  item.addEventListener('click', e => {
-    e.preventDefault();
-    document.querySelectorAll('.comm-item').forEach(i=>i.classList.remove('active'));
-    item.classList.add('active');
-    activeCommunity = item.dataset.comm;
-    renderFeed();
+function setupCommunityNav() {
+  document.querySelectorAll('.comm-item').forEach(item => {
+    item.addEventListener('click', async e => {
+      e.preventDefault();
+      document.querySelectorAll('.comm-item').forEach(i=>i.classList.remove('active'));
+      item.classList.add('active');
+      activeCommunity = item.dataset.comm;
+      await renderFeed();
+    });
   });
+}
+
+function setupSortTabs() {
+  document.querySelectorAll('.sort-tab').forEach(tab => {
+    tab.addEventListener('click', async () => {
+      document.querySelectorAll('.sort-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      activeSort = tab.dataset.sort;
+      await renderFeed();
+    });
+  });
+}
+
+const createModal = document.getElementById('create-modal');
+if(createModal) createModal.addEventListener('click', e => { 
+  if(e.target === createModal) closeCreatePost(); 
 });
 
-// Sort tabs
-document.querySelectorAll('.sort-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.sort-tab').forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    activeSort = tab.dataset.sort;
-    renderFeed();
-  });
-});
-
-// Close modals on overlay click
-document.getElementById('create-modal').addEventListener('click', e => { if(e.target === document.getElementById('create-modal')) closeCreatePost(); });
-
-// Init
-setupNav();
-renderFeed();
+// Run Init
+initCommunity();

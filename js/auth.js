@@ -1,12 +1,5 @@
 /* ====== SUPABASE AUTH & DB ====== */
-const DB = {
-  get: (key, def = null) => {
-    try { return JSON.parse(localStorage.getItem('tc_' + key)) ?? def; }
-    catch { return def; }
-  },
-  set: (key, val) => localStorage.setItem('tc_' + key, JSON.stringify(val)),
-  setCurrentUser: (u) => DB.set('current_user', u),
-};
+// DB object is provided by db.js
 
 // Adjectives & nouns for username generation
 const ADJ = ['swift','cosmic','neon','quantum','lunar','cyber','pixel','binary','neural','atomic','stellar','digital','hyper','sonic','echo'];

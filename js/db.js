@@ -12,9 +12,29 @@ const DB = {
   currentUser: () => DB.get('current_user', null),
   setCurrentUser: (u) => DB.set('current_user', u),
 
-  requireAuth: () => {
-    const u = DB.currentUser();
-    if (!u) { window.location.href = 'auth.html'; return null; }
+  // New async auth check
+  async checkAuth() {
+    let u = DB.currentUser();
+    if (!u) {
+      // Check Supabase session
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        // Fetch profile
+        const { data: profile } = await supabase.from('profiles').select('*').eq('id', session.user.id).single();
+        u = { ...session.user, ...profile };
+        DB.setCurrentUser(u);
+      }
+    }
+    return u;
+  },
+
+  requireAuth: async () => {
+    const u = await DB.checkAuth();
+    if (!u) { 
+      const isSubPage = window.location.pathname.includes('/pages/');
+      window.location.href = isSubPage ? 'auth.html' : 'pages/auth.html'; 
+      return null; 
+    }
     return u;
   },
 
