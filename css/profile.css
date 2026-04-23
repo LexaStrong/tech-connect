@@ -1,0 +1,57 @@
+/* ====== PROFILE CSS ====== */
+.profile-layout { max-width:1000px; margin:0 auto; padding:70px 20px 60px; }
+.profile-banner { height:180px; background:linear-gradient(135deg,rgba(99,102,241,0.4),rgba(6,182,212,0.3),rgba(168,85,247,0.3)); border-radius:var(--radius) var(--radius) 0 0; margin-top:8px; position:relative; overflow:hidden; }
+.profile-banner::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(99,102,241,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.08) 1px,transparent 1px); background-size:30px 30px; }
+.profile-header { background:var(--bg-card); border:1px solid var(--border-light); border-top:none; border-radius:0 0 var(--radius) var(--radius); padding:0 24px 24px; display:flex; gap:20px; align-items:flex-end; margin-bottom:24px; position:relative; }
+.profile-avatar-wrap { position:relative; margin-top:-40px; flex-shrink:0; }
+.profile-avatar { width:90px; height:90px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-size:2rem; font-weight:700; color:white; border:4px solid var(--bg-card); }
+.online-indicator { position:absolute; bottom:4px; right:4px; width:14px; height:14px; border-radius:50%; background:var(--green); border:2px solid var(--bg-card); }
+.profile-info { flex:1; padding-top:16px; }
+.profile-name-row { display:flex; align-items:center; gap:12px; margin-bottom:4px; flex-wrap:wrap; }
+.profile-name-row h1 { font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:700; letter-spacing:-0.5px; }
+.profile-badges { display:flex; gap:6px; flex-wrap:wrap; }
+.profile-badge { background:rgba(99,102,241,0.12); border:1px solid rgba(99,102,241,0.25); color:#a5b4fc; font-size:0.72rem; font-weight:700; padding:3px 10px; border-radius:100px; }
+.profile-username { color:var(--muted); font-size:0.9rem; margin-bottom:8px; }
+.profile-bio { color:var(--text2); font-size:0.875rem; line-height:1.5; margin-bottom:14px; max-width:500px; }
+.profile-stats { display:flex; gap:20px; flex-wrap:wrap; }
+.pstat { display:flex; flex-direction:column; }
+.pstat strong { font-family:'Space Grotesk',sans-serif; font-size:1.1rem; font-weight:700; background:var(--gradient); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.pstat span { font-size:0.72rem; color:var(--muted); font-weight:500; }
+.profile-actions { display:flex; gap:8px; padding-top:16px; flex-shrink:0; align-self:flex-start; }
+.edit-profile-btn { background:rgba(255,255,255,0.06); border:1px solid var(--border-light); border-radius:10px; color:var(--text2); font-size:0.875rem; font-weight:600; padding:9px 20px; cursor:pointer; transition:var(--trans); font-family:'Inter',sans-serif; }
+.edit-profile-btn:hover { border-color:rgba(99,102,241,0.3); color:var(--text); }
+.follow-profile-btn { background:var(--gradient); border:none; border-radius:10px; color:white; font-size:0.875rem; font-weight:700; padding:9px 20px; cursor:pointer; transition:var(--trans); font-family:'Inter',sans-serif; }
+.follow-profile-btn:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(99,102,241,0.4); }
+.follow-profile-btn.following { background:rgba(255,255,255,0.06); border:1px solid var(--border-light); color:var(--text2); }
+.msg-profile-btn { background:rgba(99,102,241,0.12); border:1px solid rgba(99,102,241,0.2); border-radius:10px; color:#a5b4fc; font-size:0.875rem; font-weight:600; padding:9px 16px; cursor:pointer; transition:var(--trans); font-family:'Inter',sans-serif; display:flex; align-items:center; gap:6px; }
+.msg-profile-btn:hover { background:rgba(99,102,241,0.25); }
+
+/* Profile body */
+.profile-body { display:grid; grid-template-columns:1fr 280px; gap:20px; }
+.profile-main { }
+.profile-tabs { display:flex; gap:4px; background:rgba(255,255,255,0.04); border-radius:10px; padding:4px; margin-bottom:16px; }
+.profile-tab { flex:1; padding:9px; background:none; border:none; color:var(--text2); font-size:0.875rem; font-weight:600; border-radius:8px; cursor:pointer; transition:var(--trans); font-family:'Inter',sans-serif; }
+.profile-tab.active { background:rgba(99,102,241,0.15); color:var(--text); }
+.profile-panel { display:flex; flex-direction:column; gap:10px; }
+.profile-post-card { background:var(--bg-card); border:1px solid var(--border-light); border-radius:var(--radius); padding:16px; cursor:pointer; transition:var(--trans); }
+.profile-post-card:hover { border-color:rgba(99,102,241,0.25); background:var(--bg-hover); }
+.profile-post-title { font-family:'Space Grotesk',sans-serif; font-size:0.95rem; font-weight:600; margin-bottom:6px; }
+.profile-post-meta { font-size:0.78rem; color:var(--muted); display:flex; gap:12px; }
+.profile-post-meta span { display:flex; align-items:center; gap:4px; }
+.empty-profile { text-align:center; padding:40px 20px; color:var(--muted); background:var(--bg-card); border:1px solid var(--border-light); border-radius:var(--radius); }
+
+/* About sidebar */
+.profile-side { }
+.about-row { display:flex; align-items:center; gap:8px; color:var(--text2); font-size:0.82rem; margin-bottom:10px; }
+.about-row svg { color:var(--muted); flex-shrink:0; }
+
+@media(max-width:768px){ .profile-body{grid-template-columns:1fr;} .profile-side{display:none;} .profile-header{flex-wrap:wrap;} .profile-actions{width:100%;} }
+
+/* Avatar Selector */
+.avatar-selector { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:8px; max-height:200px; overflow-y:auto; padding:5px; border: 1px solid var(--border-light); border-radius: 10px; background: rgba(0,0,0,0.02); }
+.avatar-option { width:100%; aspect-ratio:1; border-radius:10px; border:2px solid transparent; cursor:pointer; transition:var(--trans); overflow:hidden; background:var(--bg2); position: relative; }
+.avatar-option:hover { border-color:var(--accent); transform:scale(1.05); }
+.avatar-option.selected { border-color:var(--accent); box-shadow:0 0 0 3px rgba(99,102,241,0.2); }
+.avatar-option img { width:100%; height:100%; object-fit:cover; }
+.avatar-option .avatar-label { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: white; font-size: 0.6rem; text-align: center; padding: 2px 0; }
+

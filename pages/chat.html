@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tech Connect | Chat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/community.css" />
+  <link rel="stylesheet" href="../css/chat.css" />
+</head>
+<body>
+  <header class="app-nav">
+    <div class="app-nav-inner">
+      <a href="community.html" class="nav-brand"><svg width="26" height="26" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="url(#cn1)" stroke-width="2"/><path d="M8 10L14 6L20 10L20 18L14 22L8 18Z" fill="url(#cn2)" opacity="0.9"/><path d="M11 14L13 16L17 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="cn1" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#06b6d4"/></linearGradient><linearGradient id="cn2" x1="8" y1="6" x2="20" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs></svg><span>Tech<strong>Connect</strong></span></a>
+      <div style="flex:1"></div>
+      <div class="nav-right">
+        <a href="community.html" class="nav-icon-btn" title="Home"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></a>
+        <a href="chat.html" class="nav-icon-btn active" title="Chat"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></a>
+        <a href="inbox.html" class="nav-icon-btn" title="Inbox"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></a>
+        <div class="nav-avatar" id="nav-avatar" style="cursor:pointer" onclick="window.location.href='profile.html'">?</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="chat-layout">
+    <!-- Contacts sidebar -->
+    <div class="chat-sidebar">
+      <div class="chat-sidebar-header">
+        <h2>Messages</h2>
+        <button class="new-chat-btn" id="new-chat-btn" title="New Message">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+      </div>
+      <div class="chat-search-wrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="chat-search" placeholder="Search messages..." />
+      </div>
+      <div class="chat-threads" id="chat-threads"></div>
+    </div>
+
+    <!-- Chat area -->
+    <div class="chat-main" id="chat-main">
+      <div class="chat-empty" id="chat-empty">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <h3>Select a conversation</h3>
+        <p>Or start a new message</p>
+      </div>
+
+      <div class="chat-view" id="chat-view" style="display:none">
+        <div class="chat-view-header" id="chat-view-header"></div>
+        <div class="messages-area" id="messages-area"></div>
+        <div class="chat-input-bar">
+          <div class="chat-attach-btns">
+            <button class="chat-attach-btn" title="Attach file" onclick="document.getElementById('chat-file-input').click()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+            </button>
+            <input type="file" id="chat-file-input" accept="image/*,video/*,.pdf,audio/*" style="display:none" onchange="attachFile(event)" />
+          </div>
+          <div class="chat-input-wrap">
+            <div class="chat-attachment-preview" id="chat-attachment-preview"></div>
+            <input type="text" id="chat-msg-input" placeholder="Type a message… (disappears in 24h)" />
+          </div>
+          <button class="chat-send-btn" id="chat-send-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New chat modal -->
+  <div class="modal-overlay" id="new-chat-modal" style="display:none">
+    <div class="modal" style="max-width:420px">
+      <div class="modal-header"><h3>New Message</h3><button class="modal-close" onclick="closeNewChat()">×</button></div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label style="font-size:.82rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:block">To: Username</label>
+          <input type="text" id="new-chat-username" placeholder="@username" class="styled-input" />
+        </div>
+        <div id="new-chat-error" style="color:#f87171;font-size:.82rem;min-height:18px"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeNewChat()">Cancel</button>
+        <button class="btn-post" onclick="startNewChat()">Start Chat</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/db.js"></script>
+  <script src="../js/chat.js"></script>
+</body>
+</html>

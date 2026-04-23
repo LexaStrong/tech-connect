@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tech Connect | Where Innovators Unite</title>
+  <meta name="description" content="Tech Connect is the premier community platform for developers, innovators, and tech idealists to collaborate, share ideas, and build the future together." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/landing.css" />
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="14" r="13" stroke="url(#g1)" stroke-width="2"/>
+            <path d="M8 10 L14 6 L20 10 L20 18 L14 22 L8 18 Z" fill="url(#g2)" opacity="0.9"/>
+            <path d="M11 14 L13 16 L17 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6366f1"/>
+                <stop offset="1" stop-color="#06b6d4"/>
+              </linearGradient>
+              <linearGradient id="g2" x1="8" y1="6" x2="20" y2="22" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6366f1"/>
+                <stop offset="1" stop-color="#06b6d4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span>Tech<strong>Connect</strong></span>
+      </a>
+      <div class="nav-links">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#community" class="nav-link">Community</a>
+        <a href="#about" class="nav-link">About</a>
+      </div>
+      <div class="nav-actions">
+        <a href="pages/auth.html" class="btn-ghost" id="login-btn">Log In</a>
+        <a href="pages/auth.html?mode=signup" class="btn-primary" id="join-btn">Join Free</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#features">Features</a>
+      <a href="#community">Community</a>
+      <a href="#about">About</a>
+      <a href="pages/auth.html">Log In</a>
+      <a href="pages/auth.html?mode=signup" class="btn-primary">Join Free</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-section" id="hero">
+    <div class="hero-text">
+      <h1 class="hero-title">
+        Where Innovators<br/>
+        <span class="gradient-text">Connect & Build</span><br/>
+        The Future
+      </h1>
+      <div class="hero-actions">
+        <a href="pages/auth.html?mode=signup" class="btn-hero-primary" style="border-radius:100px; padding:14px 32px;">
+          Join for Free →
+        </a>
+        <a href="#community" class="btn-hero-ghost" style="border-radius:100px; padding: 10px 24px; border: 1px solid var(--border);">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--accent);color:white;display:flex;align-items:center;justify-content:center;font-size:.7rem;margin-right:4px;">TC</div>
+          Explore Communities
+        </a>
+      </div>
+    </div>
+    <img src="assets/images/hero.png" alt="Diverse tech community collaborating" class="hero-image" />
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-tag">Features</div>
+        <h2>Everything You Need to<br/><span class="gradient-text">Collaborate & Innovate</span></h2>
+        <p>Built by developers for developers. Every feature designed for the way tech people actually work.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card feature-card--large">
+          <div class="feature-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>Ephemeral Chats</h3>
+          <p>All messages and chats vanish after 24 hours, keeping conversations fresh and your digital footprint minimal. Perfect for spontaneous collaboration.</p>
+          <div class="feature-badge">Auto-delete in 24h</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <h3>Rich File Sharing</h3>
+          <p>Share PDFs, images, audio files, and videos up to 60 seconds directly in any conversation.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Follow & Connect</h3>
+          <p>Build your network with unique @usernames. Follow innovators, get followers, grow together.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3>Private Inbox</h3>
+          <p>Secure private messaging and DMs with real-time delivery. Full inbox management system.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3>Comment System</h3>
+          <p>Nested Reddit-style comments with upvotes, awards, and threaded discussions on every post.</p>
+        </div>
+        <div class="feature-card feature-card--large">
+          <div class="feature-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h3>Real-Time Everything</h3>
+          <p>Instant updates across feeds, chats, and notifications. Feel the pulse of the tech community in real time with no refresh needed.</p>
+          <div class="feature-badge">Live ●</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMUNITY PREVIEW -->
+  <section class="community-preview" id="community">
+    <div class="section-container">
+      <div class="section-header">
+        <div class="section-tag">Community</div>
+        <h2>Built for Tech People,<br/><span class="gradient-text">By Tech People</span></h2>
+        <p>From solo hackers to enterprise architects, everyone has a space here.</p>
+      </div>
+      <div class="community-grid">
+        <div class="community-card">
+          <div class="community-card-icon">💻</div>
+          <h4>Open Source</h4>
+          <p>Collaborate on OSS projects, find contributors, and get feedback on your code.</p>
+          <span class="community-members">3.2K members</span>
+        </div>
+        <div class="community-card">
+          <div class="community-card-icon">🤖</div>
+          <h4>AI & Machine Learning</h4>
+          <p>Discuss models, datasets, and the ethical future of artificial intelligence.</p>
+          <span class="community-members">2.8K members</span>
+        </div>
+        <div class="community-card">
+          <div class="community-card-icon">🚀</div>
+          <h4>Startups & Ideas</h4>
+          <p>Validate your startup idea, find co-founders, and get brutally honest feedback.</p>
+          <span class="community-members">1.9K members</span>
+        </div>
+        <div class="community-card">
+          <div class="community-card-icon">🎨</div>
+          <h4>Design & UX</h4>
+          <p>Share designs, critique interfaces, and discuss human-centered technology.</p>
+          <span class="community-members">1.4K members</span>
+        </div>
+        <div class="community-card">
+          <div class="community-card-icon">🔐</div>
+          <h4>Cybersecurity</h4>
+          <p>CTFs, ethical hacking, zero-days, and responsible disclosure discussions.</p>
+          <span class="community-members">2.1K members</span>
+        </div>
+        <div class="community-card">
+          <div class="community-card-icon">☁️</div>
+          <h4>Cloud & DevOps</h4>
+          <p>Kubernetes, Docker, CI/CD pipelines, and cloud architecture discussions.</p>
+          <span class="community-members">1.7K members</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="about">
+    <div class="cta-bg">
+      <div class="cta-orb cta-orb-1"></div>
+      <div class="cta-orb cta-orb-2"></div>
+    </div>
+    <div class="section-container cta-container">
+      <h2>Ready to Join the<br/><span class="gradient-text">Most Innovative Community?</span></h2>
+      <p>No algorithms, no ads, no noise. Just pure tech conversations that matter.</p>
+      <a href="pages/auth.html?mode=signup" class="btn-hero-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Get Your Free Username
+      </a>
+      <p class="cta-note">No credit card required · Join in seconds</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="nav-brand">
+          <div class="brand-icon">
+            <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+              <circle cx="14" cy="14" r="13" stroke="url(#fg1)" stroke-width="2"/>
+              <path d="M8 10 L14 6 L20 10 L20 18 L14 22 L8 18 Z" fill="url(#fg2)" opacity="0.9"/>
+              <path d="M11 14 L13 16 L17 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs>
+                <linearGradient id="fg1" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#6366f1"/><stop offset="1" stop-color="#06b6d4"/>
+                </linearGradient>
+                <linearGradient id="fg2" x1="8" y1="6" x2="20" y2="22" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#6366f1"/><stop offset="1" stop-color="#06b6d4"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <span>Tech<strong>Connect</strong></span>
+        </div>
+        <p>The premier community for tech innovators worldwide.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Platform</h5>
+          <a href="#">Feed</a>
+          <a href="#">Communities</a>
+          <a href="#">Messages</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="#">About</a>
+          <a href="#">Blog</a>
+          <a href="#">Careers</a>
+        </div>
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Guidelines</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 TechConnect. Built with ❤️ by developers for developers.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/landing.js"></script>
+</body>
+</html>

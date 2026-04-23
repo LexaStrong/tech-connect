@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tech Connect | Community</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/community.css" />
+</head>
+<body>
+  <!-- APP NAV -->
+  <header class="app-nav" id="app-nav">
+    <div class="app-nav-inner">
+      <a href="community.html" class="nav-brand">
+        <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="13" stroke="url(#ng1)" stroke-width="2"/>
+          <path d="M8 10L14 6L20 10L20 18L14 22L8 18Z" fill="url(#ng2)" opacity="0.9"/>
+          <path d="M11 14L13 16L17 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="ng1" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
+            <linearGradient id="ng2" x1="8" y1="6" x2="20" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
+          </defs>
+        </svg>
+        <span>Tech<strong>Connect</strong></span>
+      </a>
+
+      <!-- Search -->
+      <div class="nav-search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="search-input" placeholder="Search communities, posts, people..." />
+      </div>
+
+      <!-- Nav right -->
+      <div class="nav-right">
+        <a href="community.html" class="nav-icon-btn active" title="Home" id="home-nav">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </a>
+        <a href="chat.html" class="nav-icon-btn" title="Chat" id="chat-nav">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </a>
+        <button class="nav-icon-btn" id="theme-toggle" title="Toggle Theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="theme-icon-sun" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="17.78" x2="5.64" y2="16.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="theme-icon-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a href="inbox.html" class="nav-icon-btn" title="Inbox" id="inbox-nav">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span class="notif-badge" id="notif-count" style="display:none">0</span>
+        </a>
+        <div class="nav-user-menu" id="nav-user-menu">
+          <div class="nav-avatar" id="nav-avatar">?</div>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="dropdown-user-info" id="dropdown-user-info"></div>
+            <hr class="dropdown-divider"/>
+            <a href="profile.html" class="dropdown-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> My Profile
+            </a>
+            <a href="inbox.html" class="dropdown-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Inbox
+            </a>
+            <hr class="dropdown-divider"/>
+            <button class="dropdown-item danger" id="logout-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Log Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar sidebar-left" id="sidebar-left">
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Communities</h3>
+        <nav class="community-nav" id="community-nav">
+          <a href="#" class="comm-item active" data-comm="All">
+            <span class="comm-icon">🌐</span> All Posts
+          </a>
+          <a href="#" class="comm-item" data-comm="Open Source">
+            <span class="comm-icon">💻</span> Open Source
+          </a>
+          <a href="#" class="comm-item" data-comm="AI & ML">
+            <span class="comm-icon">🤖</span> AI & Machine Learning
+          </a>
+          <a href="#" class="comm-item" data-comm="Startups & Ideas">
+            <span class="comm-icon">🚀</span> Startups & Ideas
+          </a>
+          <a href="#" class="comm-item" data-comm="Design & UX">
+            <span class="comm-icon">🎨</span> Design & UX
+          </a>
+          <a href="#" class="comm-item" data-comm="Cybersecurity">
+            <span class="comm-icon">🔐</span> Cybersecurity
+          </a>
+          <a href="#" class="comm-item" data-comm="Cloud & DevOps">
+            <span class="comm-icon">☁️</span> Cloud & DevOps
+          </a>
+          <a href="#" class="comm-item" data-comm="Web Dev">
+            <span class="comm-icon">🌐</span> Web Dev
+          </a>
+          <a href="#" class="comm-item" data-comm="Mobile Dev">
+            <span class="comm-icon">📱</span> Mobile Dev
+          </a>
+          <a href="#" class="comm-item" data-comm="Blockchain">
+            <span class="comm-icon">⛓️</span> Blockchain & Web3
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Following</h3>
+        <div class="following-list" id="following-list">
+          <p class="empty-text">Follow people to see them here</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN FEED -->
+    <main class="main-content">
+      <!-- Create post bar -->
+      <div class="create-post-bar" id="create-post-bar">
+        <div class="create-avatar" id="create-avatar">?</div>
+        <button class="create-trigger" id="create-trigger">What are you building today?</button>
+        <div class="create-icons">
+          <button class="create-icon-btn" title="Image" onclick="openCreatePost('image')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </button>
+          <button class="create-icon-btn" title="Link" onclick="openCreatePost('link')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sort bar -->
+      <div class="sort-bar">
+        <div class="sort-tabs">
+          <button class="sort-tab active" data-sort="hot">🔥 Hot</button>
+          <button class="sort-tab" data-sort="new">✨ New</button>
+          <button class="sort-tab" data-sort="top">📈 Top</button>
+        </div>
+      </div>
+
+      <!-- Posts feed -->
+      <div class="feed" id="feed">
+        <div class="loading-spinner" id="feed-loading">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="sidebar sidebar-right">
+      <div class="sidebar-card">
+        <h3 class="sidebar-title">Community Rules</h3>
+        <ol class="rules-list">
+          <li>Be respectful and constructive</li>
+          <li>No spam or self-promotion spam</li>
+          <li>Tag your posts with the right community</li>
+          <li>Keep it tech-focused</li>
+          <li>No doxxing or personal attacks</li>
+        </ol>
+      </div>
+
+      <div class="sidebar-card">
+        <h3 class="sidebar-title">🔥 Trending Tags</h3>
+        <div class="tag-cloud" id="tag-cloud">
+          <span class="tag">#opensource</span>
+          <span class="tag">#ai</span>
+          <span class="tag">#webdev</span>
+          <span class="tag">#devops</span>
+          <span class="tag">#python</span>
+          <span class="tag">#react</span>
+          <span class="tag">#startup</span>
+          <span class="tag">#security</span>
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <h3 class="sidebar-title">⚡ People to Follow</h3>
+        <div class="suggested-users" id="suggested-users"></div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- CREATE POST MODAL -->
+  <div class="modal-overlay" id="create-modal" style="display:none">
+    <div class="modal" id="create-modal-card">
+      <div class="modal-header">
+        <h3>Create a Post</h3>
+        <button class="modal-close" onclick="closeCreatePost()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <select id="post-community" class="styled-select">
+            <option value="Open Source">💻 Open Source</option>
+            <option value="AI & ML">🤖 AI & Machine Learning</option>
+            <option value="Startups & Ideas">🚀 Startups & Ideas</option>
+            <option value="Design & UX">🎨 Design & UX</option>
+            <option value="Cybersecurity">🔐 Cybersecurity</option>
+            <option value="Cloud & DevOps">☁️ Cloud & DevOps</option>
+            <option value="Web Dev">🌐 Web Dev</option>
+            <option value="Mobile Dev">📱 Mobile Dev</option>
+            <option value="Blockchain">⛓️ Blockchain & Web3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <input type="text" id="post-title" placeholder="Title (required)" class="styled-input" maxlength="300" />
+          <span class="char-count" id="title-count">0/300</span>
+        </div>
+        <div class="form-group">
+          <textarea id="post-body" placeholder="Share your thoughts, ideas, or code snippet..." class="styled-textarea" rows="6"></textarea>
+        </div>
+        <!-- File upload area -->
+        <div class="upload-area" id="upload-area">
+          <input type="file" id="file-input" accept="image/*,video/*,.pdf,audio/*" multiple style="display:none" onchange="handleFileUpload(event)" />
+          <div class="upload-zone" onclick="document.getElementById('file-input').click()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span>Attach files: Images, PDFs, Audio, Videos (≤60s)</span>
+          </div>
+          <div class="file-previews" id="file-previews"></div>
+        </div>
+        <div class="form-group">
+          <input type="text" id="post-tags" placeholder="Tags (comma separated, e.g. python, oss, api)" class="styled-input" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeCreatePost()">Cancel</button>
+        <button class="btn-post" id="submit-post-btn" onclick="submitPost()">Post to Community</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POST DETAIL MODAL -->
+  <div class="modal-overlay" id="post-modal" style="display:none">
+    <div class="modal modal--wide" id="post-modal-card">
+      <div class="modal-header">
+        <h3 id="post-modal-title">Post</h3>
+        <button class="modal-close" onclick="closePostModal()">×</button>
+      </div>
+      <div class="modal-body" id="post-modal-body"></div>
+      <div class="modal-footer comment-footer">
+        <div class="comment-input-wrap">
+          <div class="create-avatar small" id="comment-avatar">?</div>
+          <input type="text" id="comment-input" placeholder="Add a comment..." class="styled-input" />
+        </div>
+        <button class="btn-post" id="submit-comment-btn">Comment</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/db.js"></script>
+  <script src="../js/community.js"></script>
+</body>
+</html>
