@@ -88,29 +88,31 @@ async function handleLogin() {
 
   setLoading(btn, true);
   
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: email.includes('@') ? email : `${email}@placeholder.com`, // Fallback for legacy usernames
-    password: password,
-  });
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email.includes('@') ? email : `${email}@placeholder.com`,
+      password: password,
+    });
 
-  if (error) {
+    if (error) throw error;
+    if (!data.user) throw new Error('No user data returned.');
+
+    // Fetch profile
+    const { data: profile, error: pError } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', data.user.id)
+      .single();
+
+    if (pError) throw new Error('Profile fetch failed: ' + pError.message);
+
+    DB.setCurrentUser({ ...data.user, ...profile });
+    window.location.href = 'community.html';
+  } catch (err) {
+    console.error('Login error:', err);
     setLoading(btn, false);
-    showError('login-error', error.message);
-    return;
+    showError('login-error', err.message || 'An unexpected error occurred.');
   }
-
-  // Fetch profile
-  const { data: profile, error: pError } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', data.user.id)
-    .single();
-
-  setLoading(btn, false);
-  if (pError) { showError('login-error', 'Profile not found.'); return; }
-
-  DB.setCurrentUser({ ...data.user, ...profile });
-  window.location.href = 'community.html';
 }
 
 async function handleSignup() {
@@ -127,46 +129,57 @@ async function handleSignup() {
 
   setLoading(btn, true);
 
-  const { data, error } = await supabase.auth.signUp({
-    email: email,
-    password: password,
-    options: {
-      data: {
-        display_name: display,
-        username: username
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          display_name: display,
+          username: username
+        }
       }
+    });
+
+    if (error) throw error;
+    if (!data.user) throw new Error('Signup failed: No user returned.');
+
+    // Check if user is already confirmed (or if confirmation is disabled)
+    // If confirmation is enabled, we might not have a session yet.
+    
+    // Create profile
+    const { error: pError } = await supabase
+      .from('profiles')
+      .insert([
+        {
+          id: data.user.id,
+          username: username,
+          display_name: display,
+          tkpoints: 0,
+          badges: ['🐣 Newbie'],
+          is_public: false
+        }
+      ]);
+
+    if (pError) {
+      // If it's a conflict, it might already exist
+      if (pError.code !== '23505') throw pError;
     }
-  });
 
-  if (error) {
     setLoading(btn, false);
-    showError('signup-error', error.message);
-    return;
-  }
-
-  // Create profile
-  const { error: pError } = await supabase
-    .from('profiles')
-    .insert([
-      {
-        id: data.user.id,
-        username: username,
-        display_name: display,
-        tkpoints: 0,
-        badges: ['🐣 Newbie'],
-        is_public: false
-      }
-    ]);
-
-  if (pError) {
+    
+    if (data.session) {
+      DB.setCurrentUser({ ...data.user, username, display_name: display });
+      window.location.href = 'community.html';
+    } else {
+      showError('signup-error', 'Check your email for the confirmation link!');
+      btn.querySelector('span').textContent = 'Waiting for confirmation...';
+    }
+  } catch (err) {
+    console.error('Signup error:', err);
     setLoading(btn, false);
-    showError('signup-error', 'Error creating profile: ' + pError.message);
-    return;
+    showError('signup-error', err.message || 'An unexpected error occurred.');
   }
-
-  setLoading(btn, false);
-  DB.setCurrentUser({ ...data.user, username, display_name: display });
-  window.location.href = 'community.html';
 }
 
 
